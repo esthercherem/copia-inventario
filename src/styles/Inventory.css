@@ -1,0 +1,23 @@
+.formulario {
+    color: black;
+    align-items: center;
+    margin-left: 400px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    height: auto;
+    width: 400px;
+    backdrop-filter: blur(50px);
+    justify-content:flex-start;
+
+    
+
+}
+
+.formulario input,
+.formulario label {
+    margin-bottom: 10px;
+}
+

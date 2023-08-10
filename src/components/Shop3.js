@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Shop.css'
 import Sidebar from './Sidebar';
-import Modal from './Modal'
 
 
 const Shop = ({ items,  onSellItem }) => {
@@ -9,14 +8,6 @@ const Shop = ({ items,  onSellItem }) => {
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [filteredItems, setFilteredItems] = useState(items);
-  const [inputValue, setInputValue] = useState('');
-    const [clientInfo, setClientInfo] = useState('');
-    const [salePrice, setSalePrice] = useState('');
-    const [saleInfo, setSaleInfo] = useState('');
-    const [soldItems, setSoldItems] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedItem, setSelectedItem] = useState(null);
-
 
 
   const handleTextSearch = () => {
@@ -138,57 +129,8 @@ const [selectedItem, setSelectedItem] = useState(null);
 
   const summary = calculateSummary();
 
-  // modal
-
-  const handleOpenModal = (item) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-  };
-
-  
-  
 
 
-// input de cliente y precio de venta
-const handleChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleSalePriceChange = (event) => {
-      setSalePrice(event.target.value);
-    };
-  
-  const handleKeyPress = (event, item) => {
-      if (event.key === 'Enter' && inputValue.trim() !== '') {
-          const updatedItem = {
-              ...item,
-              cliente: inputValue,
-              vendido: true,
-            };
-      
-            setClientInfo(`cliente: ${inputValue}`);
-            setInputValue('');
-            setSaleInfo(`Precio de Venta: ${salePrice}`);
-            setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
-          }
-        };
-  
-
-    const handleSalePriceKeyPress = (event, item) => {
-      if (event.key === 'Enter' && salePrice.trim() !== '') {
-
-           const updatedItem = {
-      ...item,
-      precioVenta: salePrice,
-      vendido: true,
-    };
-
-    setClientInfo(`cliente: ${inputValue}`);
-    setInputValue('');
-    setSaleInfo(`Precio de Venta: ${salePrice}`);
-    setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
-  }
-};
 
   return (
     <div>
@@ -241,42 +183,8 @@ const handleChange = (event) => {
             <p>Fecha de Compra: {item.purchaseDate}</p>
             <p>Lugar de Compra: {item.placeOfPurchase}</p>
             <p>Especificaciones: {item.specifications}</p>
-            <button onClick={() => handleOpenModal(item)}>Ver Detalles</button>
-            {isModalOpen && selectedItem && (
-  <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />
-)}
-            <button onClick={() => handleSell(item)}>Vendido</button>
-        
-            {clientInfo && <p>{clientInfo}</p>}
-      {!clientInfo && (
-        <div>
-          <label htmlFor="clientInput">Cliente:</label>
-          <input
-            type="text"
-            id="clientInput"
-            value={inputValue}
-            onChange={handleChange}
-            onKeyPress={handleKeyPress}
-          />
-        </div>
-      )}
-   
-      {saleInfo && <p>{saleInfo}</p>}
-      {!saleInfo && (
-          
-          <div>
-        <label htmlFor="salePriceInput">Precio de Venta:</label>
-        <input
-          type="text"
-          id="salePriceInput"
-          value={salePrice}
-          onChange={handleSalePriceChange}
-          onKeyPress={handleSalePriceKeyPress}
-        />
-      </div>
-      
-      )}
 
+            <button onClick={() => handleSell(item)}>Vendido</button>
           </div>
         ))}
       </div>

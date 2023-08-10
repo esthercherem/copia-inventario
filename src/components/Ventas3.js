@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 
 
-const Ventas = ({ soldItems, setSoldItems }) => {
+const Ventas = ({ soldItems }) => {
     const [inputValue, setInputValue] = useState('');
     const [clientInfo, setClientInfo] = useState('');
     const [salePrice, setSalePrice] = useState('');
@@ -18,38 +18,21 @@ const Ventas = ({ soldItems, setSoldItems }) => {
         setSalePrice(event.target.value);
       };
     
-    const handleKeyPress = (event, item) => {
+    const handleKeyPress = (event) => {
         if (event.key === 'Enter' && inputValue.trim() !== '') {
-            const updatedItem = {
-                ...item,
-                cliente: inputValue,
-                vendido: true,
-              };
-        
-             setClientInfo(`cliente: ${inputValue}`);
-      setInputValue('');
-      setSaleInfo(`Precio de Venta: ${salePrice}`);
-      setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
-            }
-          };
-    
-
-      const handleSalePriceKeyPress = (event, item) => {
-        if (event.key === 'Enter' && salePrice.trim() !== '') {
-
-             const updatedItem = {
-        ...item,
-        precioVenta: salePrice,
-        vendido: true,
+          setClientInfo(`Cliente: ${inputValue}`);
+          setInputValue('');
+        }
       };
 
-      setClientInfo(`cliente: ${inputValue}`);
-      setInputValue('');
-      setSaleInfo(`Precio de Venta: ${salePrice}`);
-      setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
-    }
-  };
+      const handleSalePriceKeyPress = (event) => {
+        if (event.key === 'Enter' && salePrice.trim() !== '') {
 
+         setSaleInfo(`Precio de Venta: ${salePrice}`);
+          setSalePrice('');
+        }
+      };
+    
 
 
 

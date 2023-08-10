@@ -1,5 +1,6 @@
 // En src/components/AddItemForm.js
 import React, { useState } from 'react';
+import '../styles/Inventory.css'
 
 const AddItemForm = ({ onAddItem }) => {
     const [company, setCompany] = useState('');
@@ -78,9 +79,9 @@ const AddItemForm = ({ onAddItem }) => {
 
   return (
    
-    <form onSubmit={handleSubmit}>
+    <form className= "formulario" onSubmit={handleSubmit}>
      <div className="mb-3">
-          <label htmlFor="itemType">Tipo de artículo</label>
+          <label htmlFor="itemType">Tipo de artículo  </label>
           <select
             id="itemType"
             value={itemType}
@@ -94,7 +95,7 @@ const AddItemForm = ({ onAddItem }) => {
           </select>
           </div>
         <div className="mb-3">
-          <label htmlFor="company">Compañía</label>
+          <label htmlFor="company">Compañía  </label>
           <select
             id="company"
             value={company}
@@ -109,7 +110,7 @@ const AddItemForm = ({ onAddItem }) => {
           </select>
         </div>
         <div className="mb-3">
-          <label htmlFor="cost">Costo</label>
+          <label htmlFor="cost">Costo  $</label>
           <input
             type="number"
             id="cost"
@@ -119,7 +120,7 @@ const AddItemForm = ({ onAddItem }) => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="calculatedPrice">Precio</label>
+          <label htmlFor="calculatedPrice">Precio  $</label>
           <input
             type="number"
             id="calculatedPrice"
@@ -129,7 +130,7 @@ const AddItemForm = ({ onAddItem }) => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="purchaseDate">Fecha de Compra</label>
+          <label htmlFor="purchaseDate">Fecha de Compra  </label>
           <input
             type="date"
             id="purchaseDate"
@@ -139,7 +140,7 @@ const AddItemForm = ({ onAddItem }) => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="specifications">Especificaciones</label>
+          <label htmlFor="specifications">Especificaciones  </label>
           <textarea
             id="specifications"
             value={specifications}
@@ -149,7 +150,7 @@ const AddItemForm = ({ onAddItem }) => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="code">Código</label>
+          <label htmlFor="code">Código  </label>
           <input 
             type="text"
             id="code"
@@ -159,7 +160,7 @@ const AddItemForm = ({ onAddItem }) => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="goldType">Tipo de Oro</label>
+          <label htmlFor="goldType">Tipo de Oro  </label>
           <select
             id="goldType"
             value={goldType}
@@ -172,7 +173,7 @@ const AddItemForm = ({ onAddItem }) => {
           </select>
         </div>
         <div className="mb-3">
-          <label htmlFor="placeOfPurchase">Lugar de compra</label>
+          <label htmlFor="placeOfPurchase">Lugar de compra  </label>
           <select
             id="placeOfPurchase"
             value={placeOfPurchase}
@@ -185,9 +186,11 @@ const AddItemForm = ({ onAddItem }) => {
             <option value="MIA">MIA</option>
           </select>
         </div>
-      
+        <div className="mb-3">
       <button type="submit" className="btn btn-primary">Agregar Elemento</button>
+   </div>
     </form>
+    
   );
 };
 

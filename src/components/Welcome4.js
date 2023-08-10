@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import LoginModal from './LoginModal';
 import '../styles/ModalLogin.css';
 
@@ -9,12 +10,9 @@ const Welcome = () => {
         setShowModal(!showModal);
     };
 
-    useEffect(() => {
-        toggleModal(); // Abre el modal automáticamente cuando se carga la página
-    }, []); // Se pasa un arreglo vacío como segundo argumento para que se ejecute solo una vez al montar el componente
-
     return (
-        <div className="app">
+<div className="app">
+            <button onClick={toggleModal}>Iniciar sesión</button>
             {showModal && (
                 <div className="modal-overlay visible">
                     <div className="modal-content blur-background">
@@ -27,3 +25,4 @@ const Welcome = () => {
 };
 
 export default Welcome;
+

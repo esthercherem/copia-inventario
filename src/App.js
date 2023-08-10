@@ -5,7 +5,6 @@ import Welcome from './components/Welcome';
 import Inventory from './components/Inventory';
 import Shop from './components/Shop';
 import Ventas from './components/Ventas'; 
-
 import './App.css';
 
 const App = () => {
@@ -49,7 +48,7 @@ const App = () => {
             element={<Shop items={items}  onAddItem={handleAddItem} />} /> */}
               <Route
     path="/ventas"
-    element={<Ventas soldItems={soldItems} />}  />
+    element={<Ventas soldItems={soldItems} setSoldItems={setSoldItems}  />}  />
           </Routes>
         </div>
       </div>
