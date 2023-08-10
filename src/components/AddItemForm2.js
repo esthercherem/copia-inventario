@@ -1,6 +1,6 @@
 // En src/components/AddItemForm.js
 import React, { useState } from 'react';
-// import '../styles/Inventory.css'
+ import '../styles/Inventory.css'
 
 const AddItemForm = ({ onAddItem }) => {
     const [company, setCompany] = useState('');
@@ -79,11 +79,11 @@ const AddItemForm = ({ onAddItem }) => {
 
   return (
    
-    <form class="row g-3" onSubmit={handleSubmit}>
-     <div class="col-md-4">
-          <label htmlFor="itemType" class="form-label">Tipo de artículo  </label>
-          <select id="inputState" class="form-select"
-            
+    <form className= "formulario" onSubmit={handleSubmit}>
+     <div className="mb-3">
+          <label htmlFor="itemType">Tipo de artículo  </label>
+          <select
+            id="itemType"
             value={itemType}
             onChange={(e) => setItemType(e.target.value)}
             required
@@ -94,9 +94,9 @@ const AddItemForm = ({ onAddItem }) => {
             <option value="Aretes">Aretes</option>
           </select>
           </div>
-        <div class="col-md-6">
-          <label htmlFor="company" class="form-label">Compañía  </label>
-          <select class="form-select"
+        <div className="mb-3">
+          <label htmlFor="company">Compañía  </label>
+          <select
             id="company"
             value={company}
             onChange={handleCompanyChange}
@@ -109,9 +109,9 @@ const AddItemForm = ({ onAddItem }) => {
             <option value="Bat">Bat</option>
           </select>
         </div>
-        <div  class="col-md-2">
-          <label htmlFor="cost" class="form-label">Costo  $</label>
-          <input class="form-control"
+        <div className="mb-3">
+          <label htmlFor="cost">Costo  $</label>
+          <input
             type="number"
             id="cost"
             value={cost}
@@ -119,9 +119,9 @@ const AddItemForm = ({ onAddItem }) => {
             required
           />
         </div>
-        <div class="col-md-2">
+        <div className="mb-3">
           <label htmlFor="calculatedPrice">Precio  $</label>
-          <input class="form-control"
+          <input
             type="number"
             id="calculatedPrice"
             value={calculatedPrice}
@@ -129,19 +129,29 @@ const AddItemForm = ({ onAddItem }) => {
             required
           />
         </div>
-        <div  class="col-6">
-          <label htmlFor="purchaseDate" class="form-label">Fecha de Compra  </label>
-          <input class="form-control"
+        <div className="mb-3">
+          <label htmlFor="purchaseDate">Fecha de Compra  </label>
+          <input
             type="date"
             id="purchaseDate"
             value={purchaseDate}
             onChange={(e) => setPurchaseDate(e.target.value)}
             required
           />
-        </div> 
-         <div class="col-md-4">
-          <label htmlFor="code" class="form-label">Código  </label>
-          <input class="form-control"
+        </div>
+        <div className="mb-3">
+          <label htmlFor="specifications">Especificaciones  </label>
+          <textarea
+            id="specifications"
+            value={specifications}
+            onChange={(e) => setSpecifications(e.target.value)}
+            rows="4"
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="code">Código  </label>
+          <input 
             type="text"
             id="code"
             value={code}
@@ -149,11 +159,9 @@ const AddItemForm = ({ onAddItem }) => {
             required
           />
         </div>
-       
-      
-        <div class="col-md-6">
-          <label htmlFor="goldType" class="form-label">Tipo de Oro  </label>
-          <select class="form-control"
+        <div className="mb-3">
+          <label htmlFor="goldType">Tipo de Oro  </label>
+          <select
             id="goldType"
             value={goldType}
             onChange={(e) => setGoldType(e.target.value)}
@@ -164,9 +172,9 @@ const AddItemForm = ({ onAddItem }) => {
             <option value="18K">18K</option>
           </select>
         </div>
-        <div class="col-md-6">
-          <label htmlFor="placeOfPurchase" class="form-label">Lugar de compra  </label>
-          <select class="form-control"
+        <div className="mb-3">
+          <label htmlFor="placeOfPurchase">Lugar de compra  </label>
+          <select
             id="placeOfPurchase"
             value={placeOfPurchase}
             onChange={(e) => setPlaceOfPurchase(e.target.value)}
@@ -177,21 +185,10 @@ const AddItemForm = ({ onAddItem }) => {
             <option value="LA">LA</option>
             <option value="MIA">MIA</option>
           </select>
-        </div> 
-        <div class="col-md-6">
-          <label htmlFor="specifications" class="form-label">Especificaciones  </label>
-          <textarea  class="form-control"
-            id="specifications"
-            value={specifications}
-            onChange={(e) => setSpecifications(e.target.value)}
-            rows="4"
-            required
-          />
-        </div> 
-        <div class="col-12">
-        <div class="d-grid gap-2 col-6 mx-auto">
-      <button type="submit" class="btn btn-dark">Agregar Elemento</button>
-   </div></div>
+        </div>
+        <div className="mb-3">
+      <button type="submit" className="btn btn-primary">Agregar Elemento</button>
+   </div>
     </form>
     
   );

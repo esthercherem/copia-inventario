@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import AddItemForm from './AddItemForm';
 import { Link } from 'react-router-dom';
-import '../App.css';
-import '../styles/Inventory.css'
+// import '../App.css';
+// import '../styles/Inventory.css'
 
 const Inventory = ({ onAddItem }) => {
   const [items, setItems] = useState([]);
@@ -14,16 +14,18 @@ const Inventory = ({ onAddItem }) => {
   };
 
   return (
-    <div>
-      <h1>Página de Inventario</h1>
+    <div class="col-12">
+     <h1>Agrega los datos de tu artículo :</h1><br></br><br></br>
       {/* Agrega el componente AddItemForm aquí */}
-      <AddItemForm onAddItem={onAddItem} />
-      <button type="submit" className="mb-3">
+      <AddItemForm onAddItem={onAddItem} /> <br></br>
+      <div class="d-grid gap-2 col-6 mx-auto">
+      <button type="submit" className="btn btn-dark" style={{ alignItems: 'center' }}>
         
         <Link to="/shop" style={{ color: 'white', textDecoration: 'none' }}>
           Submit
         </Link>
       </button>
+      </div>
     </div>
   );
 };
