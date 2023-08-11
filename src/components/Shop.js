@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/Shop.css'
+ import '../styles/Shop.css'
 import Sidebar from './Sidebar';
 import Modal from './Modal'
 
@@ -191,61 +191,65 @@ const handleChange = (event) => {
 };
 
   return (
-    <div>
-         <nav className="navbar">
-      <h1>Tienda</h1>
-      <div>
+    <div><div class="sticky-top">
+         <nav class="hstack gap-3" >
+            
+      
+      <div class="p-2">
         {/* Buscador de texto */}
-        <input
+        <input class="p-2"
           type="text"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
           placeholder="Buscar en toda la tienda..."
         />
-        <button onClick={handleTextSearch}>Buscar Texto</button>
+        <button class="btn btn-dark" onClick={handleTextSearch}>Buscar Texto</button>
       </div>
-      <div>
+      <div >
         {/* Buscador de rango de precios */}
-        <input
+        <input class="p-2 ms-auto"
           type="number"
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
           placeholder="Precio mínimo"
         />
-        <input
+        <input class="p-2"
           type="number"
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
           placeholder="Precio máximo"
         />
-        <button onClick={handlePriceSearch}>Buscar por Precio</button>
+        <button class="btn btn-dark" onClick={handlePriceSearch}>Buscar por Precio</button>
       </div>
-      <button onClick={handleClearSearch}>Limpiar</button>
-      
+      <button class="btn btn-dark" onClick={handleClearSearch}>Limpiar</button>
+   
       </nav>
-
+   </div>
       <div className="content">
         <Sidebar summary={summary} />
         </div>
 
-     
-      <div className="products-container">
+
+      <div className="product-container">
         {filteredItems.map((item) => (
+            <div class="product-card">
           <div key={item.code} className="product">
-            <h3>Tipo de item: {item.type}</h3>
-            <p>Código: {item.code}</p>
-            <p>Tipo de Oro: {item.goldType}</p>
-            <p>Compañía: {item.company}</p>
-            <p>Costo: {item.cost}</p>
-            <p>Precio: {item.price}</p>
-            <p>Fecha de Compra: {item.purchaseDate}</p>
-            <p>Lugar de Compra: {item.placeOfPurchase}</p>
-            <p>Especificaciones: {item.specifications}</p>
-            <button onClick={() => handleOpenModal(item)}>Ver Detalles</button>
+              {/* <img src="..." class="card-img-top" alt="..."></img> */}
+            <h5 class="card-title">Tipo de item: {item.type}</h5>
+
+            <p >Código: {item.code}</p>
+            <p >Tipo de Oro: {item.goldType}</p>
+            <p >Compañía: {item.company}</p>
+            <p >Costo: {item.cost}</p>
+            <p >Precio: {item.price}</p>
+            <p >Fecha de Compra: {item.purchaseDate}</p>
+            <p >Lugar de Compra: {item.placeOfPurchase}</p>
+            <p >Especificaciones: {item.specifications}</p>
+            <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
             {isModalOpen && selectedItem && (
   <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />
 )}
-            <button onClick={() => handleSell(item)}>Vendido</button>
+            <button class="btn btn-primary" onClick={() => handleSell(item)}>Vendido</button>
         
             {clientInfo && <p>{clientInfo}</p>}
       {!clientInfo && (
@@ -275,9 +279,10 @@ const handleChange = (event) => {
         />
       </div>
       
+      
       )}
 
-          </div>
+          </div></div>
         ))}
       </div>
     </div>

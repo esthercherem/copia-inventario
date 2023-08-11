@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react';
+import '../styles/Shop.css'
+import Modal from './Modal'
 
 
 
@@ -9,6 +11,8 @@ const Ventas = ({ soldItems, setSoldItems }) => {
     const [clientInfo, setClientInfo] = useState('');
     const [salePrice, setSalePrice] = useState('');
     const [saleInfo, setSaleInfo] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+const [selectedItem, setSelectedItem] = useState(null);
   
     const handleChange = (event) => {
       setInputValue(event.target.value);
@@ -50,15 +54,20 @@ const Ventas = ({ soldItems, setSoldItems }) => {
     }
   };
 
+  // modal
 
+  const handleOpenModal = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
 
 
   return (
-    <div>
+    <div >
       <h1>Elementos Vendidos</h1>
-      <ul>
+      <div class="product-container">
         {soldItems.map((item) => (
-          <li key={item.code}className="product">
+          <div key={item.code}className="product-card">
           
             <h3>Tipo de item: {item.type}</h3>
             <p>Código: {item.code}</p>
@@ -69,6 +78,10 @@ const Ventas = ({ soldItems, setSoldItems }) => {
             <p>Fecha de Compra: {item.purchaseDate}</p>
             <p>Lugar de Compra: {item.placeOfPurchase}</p>
             <p>Especificaciones: {item.specifications}</p>
+
+            <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
+            {isModalOpen && selectedItem && (
+  <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />)}
             
       {clientInfo && <p>{clientInfo}</p>}
       {!clientInfo && (
@@ -101,9 +114,9 @@ const Ventas = ({ soldItems, setSoldItems }) => {
       )}
 
     
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

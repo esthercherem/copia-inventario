@@ -3,16 +3,19 @@ import React from 'react';
 
 const Sidebar = ({ summary }) => {
   return (
-    <div className="sidebar">
-      <div className="sidebar-item">
+
+        
+    <nav class="sticky-top" >
+      <div class="hstack gap-3" >
+      <div class="p-2" >
         <p>Cantidad de productos:</p>
         <p>{summary.totalProducts}</p>
       </div>
-      <div className="sidebar-item">
+      <div class="p-2">
         <p>Costo total:</p>
         <p>${summary.totalCost}</p>
       </div>
-      <div className="sidebar-item">
+      <div class="p-2">
         <p>Productos de cada compañía:</p>
         <ul>
           <li>
@@ -29,7 +32,7 @@ const Sidebar = ({ summary }) => {
           </li>
         </ul>
       </div>
-      <div className="sidebar-item">
+      <div class="p-2">
         <p>Tipo de artículo:</p>
         <ul>
           <li>Collar: {summary.types.Collar}</li>
@@ -37,7 +40,7 @@ const Sidebar = ({ summary }) => {
           <li>Aretes: {summary.types.Aretes}</li>
         </ul>
       </div>
-      <div className="sidebar-item">
+      <div class="p-2">
         <p>Lugar de compra:</p>
         <ul>
           <li>MIA: {summary.places.MIA}</li>
@@ -45,7 +48,7 @@ const Sidebar = ({ summary }) => {
           <li>LA: {summary.places.LA}</li>
         </ul>
       </div>
-    </div>
+    </div></nav>
   );
 };
 
