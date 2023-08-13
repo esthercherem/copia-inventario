@@ -6,7 +6,7 @@
   }
   
   .product-card {
-    border: 3px solid gey;
+    border: 3px solid gray;
     border-radius: 3px;
     box-shadow: 0 3px 6px #999, 0 3px 6px #999;
     text-align: center;
@@ -15,7 +15,7 @@
   }
   
   .product-card:hover {
-    scale: 1.05;
+    transform: scale (1.05);
     box-shadow: 0 12px 24px #999, 0 12px 24px #999;
   }
   

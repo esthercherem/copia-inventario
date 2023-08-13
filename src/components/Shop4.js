@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
- 
+import React, { useState } from 'react';
+ import '../styles/Shop.css'
 import Sidebar from './Sidebar';
 import Modal from './Modal'
-import '../styles/Shop.css'
+
 
 const Shop = ({ items,  onSellItem }) => {
   const [searchText, setSearchText] = useState('');
@@ -16,8 +16,6 @@ const Shop = ({ items,  onSellItem }) => {
     const [soldItems, setSoldItems] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 const [selectedItem, setSelectedItem] = useState(null);
-const [exchangeRate, setExchangeRate] = useState(1); 
-
 
 
 
@@ -98,7 +96,6 @@ const [exchangeRate, setExchangeRate] = useState(1);
     // Eliminar el artículo del inventario filtrado y de los elementos mostrados
     const updatedItems = filteredItems.filter((i) => i.code !== item.code);
     setFilteredItems(updatedItems);
-    fetchExchangeRate(); 
   };
 
 
@@ -146,7 +143,6 @@ const [exchangeRate, setExchangeRate] = useState(1);
   const handleOpenModal = (item) => {
     setSelectedItem(item);
     setIsModalOpen(true);
-    fetchExchangeRate();
   };
 
   
@@ -193,24 +189,6 @@ const handleChange = (event) => {
     setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
   }
 };
-
-
-// API CONVERTIR DLS A PESOS
-
-const fetchExchangeRate = async () => {
-    try {
-      const response = await fetch('https://v6.exchangerate-api.com/v6/349c9b42e2cecb69a2b799c1/latest/USD');
-      const data = await response.json();
-      setExchangeRate(data.conversion_rates['MXN']); 
-    } catch (error) {
-      console.error('Error fetching exchange rate:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchExchangeRate();
-  }, []);
-  
 
   return (
     <div><div class="sticky-top">
@@ -267,8 +245,6 @@ const fetchExchangeRate = async () => {
             <p >Fecha de Compra: {item.purchaseDate}</p>
             <p >Lugar de Compra: {item.placeOfPurchase}</p>
             <p >Especificaciones: {item.specifications}</p>
-            <p>Costo en Pesos: {parseFloat(item.cost) * exchangeRate.toFixed(2)}</p>
-  <p>Precio en Pesos: {parseFloat(item.price) * exchangeRate.toFixed(2)}</p>
             <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
             {isModalOpen && selectedItem && (
   <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />

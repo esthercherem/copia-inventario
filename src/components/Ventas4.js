@@ -1,25 +1,71 @@
-import React, { useState, useEffect } from 'react';
- 
-import Sidebar from './Sidebar';
-import Modal from './Modal'
-import '../styles/Shop.css'
 
-const Shop = ({ items,  onSellItem }) => {
-  const [searchText, setSearchText] = useState('');
+import React, { useState } from 'react';
+import '../styles/Shop.css'
+import Modal from './Modal'
+import Sidebar from './Sidebar';
+
+
+
+const Ventas = ({ soldItems, setSoldItems, items }) => {
+    const [searchText, setSearchText] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [filteredItems, setFilteredItems] = useState(items);
-  const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState('');
     const [clientInfo, setClientInfo] = useState('');
     const [salePrice, setSalePrice] = useState('');
     const [saleInfo, setSaleInfo] = useState('');
-    const [soldItems, setSoldItems] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-const [selectedItem, setSelectedItem] = useState(null);
-const [exchangeRate, setExchangeRate] = useState(1); 
+const [selectedItem, setSelectedItem] = useState("");
+  
+    const handleChange = (event) => {
+      setInputValue(event.target.value);
+    };
 
+    const handleSalePriceChange = (event) => {
+        setSalePrice(event.target.value);
+      };
+    
+    const handleKeyPress = (event, item) => {
+        if (event.key === 'Enter' && inputValue.trim() !== '') {
+            const updatedItem = {
+                ...item,
+                cliente: inputValue,
+                vendido: true,
+              };
+        
+             setClientInfo(`cliente: ${inputValue}`);
+      setInputValue('');
+      setSaleInfo(`Precio de Venta: ${salePrice}`);
+      setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
+            }
+          };
+    
 
+      const handleSalePriceKeyPress = (event, item) => {
+        if (event.key === 'Enter' && salePrice.trim() !== '') {
 
+             const updatedItem = {
+        ...item,
+        precioVenta: salePrice,
+        vendido: true,
+      };
+
+      setClientInfo(`cliente: ${inputValue}`);
+      setInputValue('');
+      setSaleInfo(`Precio de Venta: ${salePrice}`);
+      setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
+    }
+  };
+
+  // modal
+
+  const handleOpenModal = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  // resumen de ventas y search
 
   const handleTextSearch = () => {
     const sanitizedSearchText = searchText
@@ -91,31 +137,6 @@ const [exchangeRate, setExchangeRate] = useState(1);
     return placeCount;
   };
 
-  const handleSell = (item) => {
-    // Agregar el artículo a la lista de artículos vendidos
-    onSellItem(item);
-
-    // Eliminar el artículo del inventario filtrado y de los elementos mostrados
-    const updatedItems = filteredItems.filter((i) => i.code !== item.code);
-    setFilteredItems(updatedItems);
-    fetchExchangeRate(); 
-  };
-
-
-//   const handleSell = (item) => {
-//     // Agregar el artículo a la lista de artículos vendidos
-//     setSoldItems((prevSoldItems) => [...prevSoldItems, item]);
-  
-//     // Eliminar el artículo del inventario filtrado y de los elementos mostrados
-//     const updatedItems = filteredItems.filter((i) => i.code !== item.code);
-//     setFilteredItems(updatedItems);
-  
-//     // Actualizar el resumen para incluir el contador de artículos vendidos
-//     const updatedSummary = {
-//       ...summary,
-//       soldItemsCount: soldItems.length + 1, // Agregar 1 al contador de artículos vendidos
-//     };}
-
   const calculateSummary = () => {
     return {
       totalProducts: filteredItems.length,
@@ -141,78 +162,9 @@ const [exchangeRate, setExchangeRate] = useState(1);
 
   const summary = calculateSummary();
 
-  // modal
-
-  const handleOpenModal = (item) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-    fetchExchangeRate();
-  };
-
-  
-  
-
-
-// input de cliente y precio de venta
-const handleChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleSalePriceChange = (event) => {
-      setSalePrice(event.target.value);
-    };
-  
-  const handleKeyPress = (event, item) => {
-      if (event.key === 'Enter' && inputValue.trim() !== '') {
-          const updatedItem = {
-              ...item,
-              cliente: inputValue,
-              vendido: true,
-            };
-      
-            setClientInfo(`cliente: ${inputValue}`);
-            setInputValue('');
-            setSaleInfo(`Precio de Venta: ${salePrice}`);
-            setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
-          }
-        };
-  
-
-    const handleSalePriceKeyPress = (event, item) => {
-      if (event.key === 'Enter' && salePrice.trim() !== '') {
-
-           const updatedItem = {
-      ...item,
-      precioVenta: salePrice,
-      vendido: true,
-    };
-
-    setClientInfo(`cliente: ${inputValue}`);
-    setInputValue('');
-    setSaleInfo(`Precio de Venta: ${salePrice}`);
-    setSoldItems((prevSoldItems) => [...prevSoldItems, updatedItem]);
-  }
-};
-
-
-// API CONVERTIR DLS A PESOS
-
-const fetchExchangeRate = async () => {
-    try {
-      const response = await fetch('https://v6.exchangerate-api.com/v6/349c9b42e2cecb69a2b799c1/latest/USD');
-      const data = await response.json();
-      setExchangeRate(data.conversion_rates['MXN']); 
-    } catch (error) {
-      console.error('Error fetching exchange rate:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchExchangeRate();
-  }, []);
-  
 
   return (
+
     <div><div class="sticky-top">
          <nav class="hstack gap-3" >
             
@@ -252,30 +204,27 @@ const fetchExchangeRate = async () => {
         </div>
 
 
-      <div className="product-container">
-        {filteredItems.map((item) => (
-            <div class="product-card">
-          <div key={item.code} className="product">
-              {/* <img src="..." class="card-img-top" alt="..."></img> */}
-            <h5 class="card-title">Tipo de item: {item.type}</h5>
+    <div >
+      <h1>Elementos Vendidos</h1>
+      <div class="product-container">
+        {soldItems.map((item) => (
+          <div key={item.code}className="product-card">
+          
+            <h3>Tipo de item: {item.type}</h3>
+            <p>Código: {item.code}</p>
+            <p>Tipo de Oro: {item.goldType}</p>
+            <p>Compañía: {item.company}</p>
+            <p>Costo: {item.cost}</p>
+            <p>Precio: {item.price}</p>
+            <p>Fecha de Compra: {item.purchaseDate}</p>
+            <p>Lugar de Compra: {item.placeOfPurchase}</p>
+            <p>Especificaciones: {item.specifications}</p>
 
-            <p >Código: {item.code}</p>
-            <p >Tipo de Oro: {item.goldType}</p>
-            <p >Compañía: {item.company}</p>
-            <p >Costo: {item.cost}</p>
-            <p >Precio: {item.price}</p>
-            <p >Fecha de Compra: {item.purchaseDate}</p>
-            <p >Lugar de Compra: {item.placeOfPurchase}</p>
-            <p >Especificaciones: {item.specifications}</p>
-            <p>Costo en Pesos: {parseFloat(item.cost) * exchangeRate.toFixed(2)}</p>
-  <p>Precio en Pesos: {parseFloat(item.price) * exchangeRate.toFixed(2)}</p>
             <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
             {isModalOpen && selectedItem && (
-  <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />
-)}
-            <button class="btn btn-primary" onClick={() => handleSell(item)}>Vendido</button>
-        
-            {clientInfo && <p>{clientInfo}</p>}
+  <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />)}
+            
+      {clientInfo && <p>{clientInfo}</p>}
       {!clientInfo && (
         <div>
           <label htmlFor="clientInput">Cliente:</label>
@@ -303,14 +252,14 @@ const fetchExchangeRate = async () => {
         />
       </div>
       
-      
       )}
 
-          </div></div>
+    
+          </div>
         ))}
       </div>
-    </div>
+    </div>   </div>
   );
 };
 
-export default Shop;
+export default Ventas;

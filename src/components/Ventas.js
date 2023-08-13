@@ -1,12 +1,13 @@
 
 import React, { useState } from 'react';
 import '../styles/Shop.css'
-import Modal from './Modal'
+import ModalVentas from './ModalVentas'
 
 
 
 
 const Ventas = ({ soldItems, setSoldItems }) => {
+
     const [inputValue, setInputValue] = useState('');
     const [clientInfo, setClientInfo] = useState('');
     const [salePrice, setSalePrice] = useState('');
@@ -61,8 +62,12 @@ const [selectedItem, setSelectedItem] = useState(null);
     setIsModalOpen(true);
   };
 
+  
 
   return (
+
+    
+
     <div >
       <h1>Elementos Vendidos</h1>
       <div class="product-container">
@@ -81,7 +86,7 @@ const [selectedItem, setSelectedItem] = useState(null);
 
             <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
             {isModalOpen && selectedItem && (
-  <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />)}
+  <ModalVentas item={selectedItem} onClose={() => setIsModalOpen(false)} />)}
             
       {clientInfo && <p>{clientInfo}</p>}
       {!clientInfo && (
@@ -117,8 +122,10 @@ const [selectedItem, setSelectedItem] = useState(null);
           </div>
         ))}
       </div>
-    </div>
+    </div>   
   );
 };
 
 export default Ventas;
+
+
