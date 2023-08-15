@@ -214,7 +214,7 @@ const fetchExchangeRate = async () => {
 
   return (
     <div><div class="sticky-top">
-         <nav class="hstack gap-3" >
+         <nav class="hstack gap-3 bg-light" >
             
       
       <div class="p-2">
@@ -244,14 +244,15 @@ const fetchExchangeRate = async () => {
         <button class="btn btn-dark" onClick={handlePriceSearch}>Buscar por Precio</button>
       </div>
       <button class="btn btn-dark" onClick={handleClearSearch}>Limpiar</button>
-   
-      </nav>
-   </div>
+    </nav>
+    <nav class="hstack gap-3 bg-light">
+     <br></br><br></br>
+  
       <div className="content">
         <Sidebar summary={summary} />
         </div>
-
-
+</nav>
+ </div>
       <div className="product-container">
         {filteredItems.map((item) => (
             <div class="product-card">

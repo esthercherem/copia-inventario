@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LoginModal from './LoginModal';
-import '../styles/ModalLogin.css';
+
 
 const Welcome = () => {
     const [showModal, setShowModal] = useState(false);

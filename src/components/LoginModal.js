@@ -1,5 +1,6 @@
 // LoginModal.js
 import React, { useState } from 'react';
+ import '../styles/ModalLogin.css';
 
 const LoginModal = ({ onClose }) => {
     const [username, setUsername] = useState('');
