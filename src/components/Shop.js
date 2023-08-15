@@ -202,6 +202,7 @@ const fetchExchangeRate = async () => {
       const response = await fetch('https://v6.exchangerate-api.com/v6/349c9b42e2cecb69a2b799c1/latest/USD');
       const data = await response.json();
       setExchangeRate(data.conversion_rates['MXN']); 
+      
     } catch (error) {
       console.error('Error fetching exchange rate:', error);
     }
@@ -213,8 +214,8 @@ const fetchExchangeRate = async () => {
   
 
   return (
-    <div><div class="sticky-top">
-         <nav class="hstack gap-3 bg-light" >
+    <div><div class="sticky-top"> 
+<nav class={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
             
       
       <div class="p-2">
@@ -245,7 +246,7 @@ const fetchExchangeRate = async () => {
       </div>
       <button class="btn btn-dark" onClick={handleClearSearch}>Limpiar</button>
     </nav>
-    <nav class="hstack gap-3 bg-light">
+    <nav class={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
      <br></br><br></br>
   
       <div className="content">
@@ -268,8 +269,9 @@ const fetchExchangeRate = async () => {
             <p >Fecha de Compra: {item.purchaseDate}</p>
             <p >Lugar de Compra: {item.placeOfPurchase}</p>
             <p >Especificaciones: {item.specifications}</p>
-            <p>Costo en Pesos: {parseFloat(item.cost) * exchangeRate.toFixed(2)}</p>
-  <p>Precio en Pesos: {parseFloat(item.price) * exchangeRate.toFixed(2)}</p>
+            <p>Costo en Pesos: {parseFloat(item.cost * exchangeRate).toFixed(2)}</p>
+<p>Precio en Pesos: {parseFloat(item.price * exchangeRate).toFixed(2)}</p>
+
             <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
             {isModalOpen && selectedItem && (
   <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />

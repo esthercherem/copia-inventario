@@ -29,3 +29,6 @@
     font-weight: 700;
   }
 
+  .hide-nav {
+    display: none;
+  }
