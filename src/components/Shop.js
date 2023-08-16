@@ -234,11 +234,7 @@ const Shop = ({ items, onSellItem }) => {
               <p>Especificaciones: {item.specifications}</p>
               <p>Costo en Pesos: {parseFloat(item.cost * exchangeRate).toFixed(2)}</p>
               <p>Precio en Pesos: {parseFloat(item.price * exchangeRate).toFixed(2)}</p>
-              <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
-              {isModalOpen && selectedItem && (
-                <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />
-              )}
-              <button class="btn btn-primary" onClick={() => handleSell(item)}>Vendido</button>
+              
               {clientInfo && <p>{clientInfo}</p>}
               {!clientInfo && (
                 <div>
@@ -264,7 +260,12 @@ const Shop = ({ items, onSellItem }) => {
                     onKeyPress={(event) => handleInputKeyPress(event, item)}
                   />
                 </div>
-              )}
+              )}<br></br>
+              <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
+              {isModalOpen && selectedItem && (
+                <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />
+              )} <br></br>
+              <button class="btn btn-primary" onClick={() => handleSell(item)}>Vendido</button>
             </div>
           </div>
         ))}
