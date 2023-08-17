@@ -5,7 +5,7 @@ import '../styles/Sidebar.css'
 const Sidebar = ({ summary }) => {
   return (
     <nav className="sticky-top">
-      <table className="summary-content">
+      <table className="summary-table">
         <thead>
           <tr>
             <th>Cantidad de productos</th>

@@ -1,16 +1,14 @@
 import React from 'react';
-import '../styles/Modal.css';
 
-const Modal = ({ item, onClose }) => {
+const Ventas = ({ soldItems }) => {
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <button className="close-button" onClick={onClose}>
-          X
-        </button>
-        {/* Mostrar los detalles del artículo */}
-        <h3>Detalles del Artículo</h3>
-        <h3>Tipo de item: {item.type}</h3>
+    <div>
+      <h1>Elementos Vendidos</h1>
+      <ul>
+        {soldItems.map((item) => (
+          <li key={item.code}className="product">
+          
+            <h3>Tipo de item: {item.type}</h3>
             <p>Código: {item.code}</p>
             <p>Tipo de Oro: {item.goldType}</p>
             <p>Compañía: {item.company}</p>
@@ -19,11 +17,11 @@ const Modal = ({ item, onClose }) => {
             <p>Fecha de Compra: {item.purchaseDate}</p>
             <p>Lugar de Compra: {item.placeOfPurchase}</p>
             <p>Especificaciones: {item.specifications}</p>
-            
-
-      </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default Modal;
+export default Ventas;

@@ -211,8 +211,8 @@ const Shop = ({ items, onSellItem }) => {
           </div>
           <button class="btn btn-dark" onClick={handleClearSearch}>Limpiar</button>
         </nav>
-        <nav className={`sidebar ${isModalOpen ? 'hide-nav' : ''}`}>
-          
+        <nav class={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
+          <br /><br />
           <div className="content">
             <Sidebar summary={summary} />
           </div>

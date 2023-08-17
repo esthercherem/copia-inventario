@@ -19,6 +19,8 @@ const ModalVentas = ({ item, onClose }) => {
             <p>Fecha de Compra: {item.purchaseDate}</p>
             <p>Lugar de Compra: {item.placeOfPurchase}</p>
             <p>Especificaciones: {item.specifications}</p>
+            <p>Cliente: {item.cliente} </p>
+<p>Precio de Venta: {item.precioVenta} </p>
 
       </div>
     </div>
