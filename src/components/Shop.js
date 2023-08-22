@@ -16,6 +16,8 @@ const Shop = ({ items, onSellItem }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [exchangeRate, setExchangeRate] = useState(1);
+  const [saleDate, setSaleDate] = useState('');
+
 
   const handleTextSearch = () => {
     const sanitizedSearchText = searchText.toLowerCase().replace(/[^a-z0-9áéíóúüñ\s]/g, '');
@@ -83,6 +85,7 @@ const Shop = ({ items, onSellItem }) => {
       ...item,
       cliente: inputValue,
       precioVenta: salePrice,
+      fechaVenta: saleDate, 
       vendido: true,
     };
 
@@ -139,12 +142,13 @@ const Shop = ({ items, onSellItem }) => {
   const handleInputKeyPress = (event, item) => {
     if (event.key === 'Enter') {
       event.preventDefault(); // Previene que el evento de "Enter" se propague y active la acción por defecto
-      if (inputValue.trim() !== '' || salePrice.trim() !== '') {
+      if (inputValue.trim() !== '' || salePrice.trim() !== '' || saleDate.trim() !== '') {
         const updatedItem = {
           ...item,
           cliente: inputValue,
           precioVenta: salePrice,
-          vendido: false, // Establece 'vendido' como 'false' aquí
+          fechaVenta: saleDate,
+          vendido: false, 
         };
   
         onSellItem(updatedItem);
@@ -154,6 +158,8 @@ const Shop = ({ items, onSellItem }) => {
   
         setInputValue('');
         setSalePrice('');
+        setSaleDate('');
+
       }
     }
   };
@@ -262,7 +268,17 @@ const Shop = ({ items, onSellItem }) => {
                     onKeyPress={(event) => handleInputKeyPress(event, item)}
                   />
                 </div>
-              )}<br></br>
+              )}
+              <br></br>
+              <label htmlFor="dateInput">Fecha de Venta:</label>
+<input
+  type="date"
+  id="dateInput"
+  value={saleDate}
+  onChange={(event) => setSaleDate(event.target.value)}
+  onKeyPress={(event) => handleInputKeyPress(event, item)}
+/>
+
               <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
               {isModalOpen && selectedItem && (
                 <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />

@@ -43,7 +43,7 @@ const [selectedItem, setSelectedItem] = useState(null);
             <p>Especificaciones: {item.specifications}</p>
             <p>Cliente: {item.cliente} </p>
 <p>Precio de Venta: {item.precioVenta} </p>
-<p>Fecha de Venta: </p>
+<p>Fecha de Venta: {item.fechaVenta} </p>
             
 
             <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
