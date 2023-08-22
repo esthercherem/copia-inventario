@@ -234,6 +234,8 @@ const Shop = ({ items, onSellItem }) => {
               <p>Especificaciones: {item.specifications}</p>
               <p>Costo en Pesos: {parseFloat(item.cost * exchangeRate).toFixed(2)}</p>
               <p>Precio en Pesos: {parseFloat(item.price * exchangeRate).toFixed(2)}</p>
+
+  
               
               {clientInfo && <p>{clientInfo}</p>}
               {!clientInfo && (
