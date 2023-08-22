@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import AddItemForm from './AddItemForm';
 import { Link } from 'react-router-dom';
+import { SERVER_URL } from "../config/config";
 // import '../App.css';
 // import '../styles/Inventory.css'
 
