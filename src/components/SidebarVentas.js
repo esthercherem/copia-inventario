@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "../styles/SidebarVentas.css"
 
 const SidebarVentas = ({ soldItems }) => {
   // Estado para almacenar la información del sidebar
@@ -51,12 +52,13 @@ const SidebarVentas = ({ soldItems }) => {
   // Renderizar el contenido del sidebar
   return (
     <div className="sidebar-ventas">
-      <h2>Sidebar de Ventas</h2>
-      <p>Total de Elementos Vendidos: {sidebarInfo.totalItems}</p>
+        <div className="summary-content">
+      <h2>Análisis de Datos:</h2>
+      <p>Total de Artículos Vendidos: {sidebarInfo.totalItems}</p>
       <p>Total de Costo: ${sidebarInfo.totalCost.toFixed(2)}</p>
       <p>Total de Precio de Venta: ${sidebarInfo.totalSalePrice.toFixed(2)}</p>
 
-      <h3>Cantidad de cada tipo de artículo:</h3>
+      <p>Cantidad de cada tipo de artículo:</p>
       <ul>
         {Object.entries(sidebarInfo.itemCountsByType).map(([type, count]) => (
           <li key={type}>
@@ -65,7 +67,7 @@ const SidebarVentas = ({ soldItems }) => {
         ))}
       </ul>
 
-      <h3>Cantidad de artículos por compañía:</h3>
+      <p>Cantidad de artículos por compañía:</p>
       <ul>
         {Object.entries(sidebarInfo.companyCounts).map(([company, count]) => (
           <li key={company}>
@@ -73,7 +75,7 @@ const SidebarVentas = ({ soldItems }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </div></div>
   );
 };
 

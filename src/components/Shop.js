@@ -93,7 +93,7 @@ const Shop = ({ items, onSellItem }) => {
       };
       
       // ADD SERVER RENDER LINK
-      const response = await axios.post('https://serverinventario.onrender.com', updatedItem);
+      const response = await axios.post('https://serverinventario.onrender.com/api/add-sold-item', updatedItem);
       const addedSoldItem = response.data;
   
       onSellItem(addedSoldItem);
@@ -204,6 +204,7 @@ const Shop = ({ items, onSellItem }) => {
       <div class="sticky-top">
         <nav class={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
           <div class="p-2">
+            <p>Filtra información de los artículos:</p>
             {/* Buscador de texto */}
             <input
               class="p-2"
@@ -212,9 +213,10 @@ const Shop = ({ items, onSellItem }) => {
               onChange={(e) => setSearchText(e.target.value)}
               placeholder="Buscar en toda la tienda..."
             />
-            <button class="btn btn-dark" onClick={handleTextSearch}>Buscar Texto</button>
+            <button class="btn btn-dark" onClick={handleTextSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>Buscar Texto</button>
           </div>
           <div>
+            <p> Busca artículos dentro del siguiente rango de precios:</p>
             {/* Buscador de rango de precios */}
             <input
               class="p-2 ms-auto"
@@ -229,10 +231,11 @@ const Shop = ({ items, onSellItem }) => {
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
               placeholder="Precio máximo"
-            />
-            <button class="btn btn-dark" onClick={handlePriceSearch}>Buscar por Precio</button>
+              style={{ marginRight: '10px' , marginLeft: '10px'}}/>
+            <button class="btn btn-dark" onClick={handlePriceSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>Buscar por Precio</button>
           </div>
-          <button class="btn btn-dark" onClick={handleClearSearch}>Limpiar</button>
+         
+          <button  className="btn btn-danger" onClick={handleClearSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>Reset el buscador</button>
         </nav>
         <nav className={`sidebar ${isModalOpen ? 'hide-nav' : ''}`}>
           

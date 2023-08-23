@@ -29,18 +29,18 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link to="/inventory" className="nav-link">
-                Inventario
+                Agregar Artículos
               </Link>
             </li>
             {/* Agrega el enlace a "Shop" aquí */}
             <li className="nav-item">
               <Link to="/shop" className="nav-link">
-                Shop
+                Inventario Existente
               </Link>
             </li>
             <li className="nav-item">
               <Link to="/ventas" className="nav-link">
-                Ventas
+                Artículos Vendidos
               </Link>
             </li>
           </ul>

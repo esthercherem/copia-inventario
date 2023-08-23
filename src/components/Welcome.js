@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './Welcome.css'; // Import custom CSS for styling
+import '../styles/Welcome.css'; // Import custom CSS for styling
 
 const Welcome = () => {
     const [showModal, setShowModal] = useState(false); // Cambiado a false

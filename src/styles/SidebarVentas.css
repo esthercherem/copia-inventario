@@ -1,0 +1,11 @@
+/* Estilo del Sidebar */
+.sidebar-ventas {
+    position: fixed;
+    width: 20%; /* Ancho del sidebar (1/5 de la página) */
+    padding: 20px; /* Espaciado interno */
+    margin-right: 20px; /* Margen a la derecha para separar el contenido */
+    background-color: #f0f0f0; /* Color de fondo (puedes ajustarlo según tu diseño) */
+    max-height: 80vh; /* Esto establece la altura máxima en el 80% de la altura visible del viewport */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido supera la altura máxima */
+  }
+  

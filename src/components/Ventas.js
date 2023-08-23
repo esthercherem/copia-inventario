@@ -10,8 +10,6 @@ import axios from 'axios';
 const Ventas = ({ soldItems, setSoldItems }) => {
 
     const [searchText, setSearchText] = useState('');
-    const [minPrice, setMinPrice] = useState('');
-    const [maxPrice, setMaxPrice] = useState('');
     const [filteredItems, setFilteredItems] = useState(soldItems);
     const [isModalOpen, setIsModalOpen] = useState(false);
 const [selectedItem, setSelectedItem] = useState(null);
@@ -32,24 +30,12 @@ const [selectedItem, setSelectedItem] = useState(null);
     setFilteredItems(filtered);
   };
 
-  // Función para filtrar elementos basados en el rango de precios
-  const handlePriceSearch = () => {
-    const min = parseFloat(minPrice);
-    const max = parseFloat(maxPrice);
-
-    const filtered = soldItems.filter((item) => {
-      const itemPrice = parseFloat(item.price);
-      return itemPrice >= min && itemPrice <= max;
-    });
-
-    setFilteredItems(filtered);
-  };
+  
 
   // Función para limpiar los filtros
   const handleClearSearch = () => {
     setSearchText('');
-    setMinPrice('');
-    setMaxPrice('');
+   
     setFilteredItems(soldItems);
   };
 
@@ -62,7 +48,7 @@ const [selectedItem, setSelectedItem] = useState(null);
   useEffect(() => {
     async function fetchSoldItems() {
       try {
-        const response = await axios.get('https://serverinventario.onrender.com'); // ADD SERVER RENDER LINK
+        const response = await axios.get('https://serverinventario.onrender.com/api/sold-items'); // ADD SERVER RENDER LINK
         setSoldItems(response.data);
       } catch (error) {
         console.error('Error al obtener elementos vendidos:', error);
@@ -83,42 +69,36 @@ const [selectedItem, setSelectedItem] = useState(null);
 
   return (
 
-    
-
-    <div >
+    <div className="ventas-container">
+        <div class="sticky-top">
+ <nav class={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
+          <div class="p-2">
+    <div> <p>Filtra cualquier información de los artículos:</p>
           <input
-        type="text"
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
+    class="p-2"
+    type="text"
+    value={searchText}
+    onChange={(e) => setSearchText(e.target.value)}
         placeholder="Buscar en ventas..."
       />
-      <button className="btn btn-dark" onClick={handleTextSearch}>
+      <button className="btn btn-dark" onClick={handleTextSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>
         Buscar Texto
       </button>
-      <input
-        type="number"
-        value={minPrice}
-        onChange={(e) => setMinPrice(e.target.value)}
-        placeholder="Precio mínimo"
-      />
-      <input
-        type="number"
-        value={maxPrice}
-        onChange={(e) => setMaxPrice(e.target.value)}
-        placeholder="Precio máximo"
-      />
-      <button className="btn btn-dark" onClick={handlePriceSearch}>
-        Buscar por Precio
-      </button>
-      <button className="btn btn-dark" onClick={handleClearSearch}>
-        Limpiar
-      </button><br></br>
-      <h1>Elementos Vendidos</h1>
+     
 
+     
+      <button  className="btn btn-danger" onClick={handleClearSearch}>
+       Reset el buscador
+      </button> <div>
+      </div>
+</div> </div>
+      </nav>
+      
 
-
+      <nav className={`sidebar ${isModalOpen ? 'hide-nav' : ''}`}>
+      <div className="content">
       <SidebarVentas soldItems={soldItems} />
-
+</div> </nav>
       <div class="product-container">
         
       {soldItems.map((item) => (
@@ -143,6 +123,7 @@ const [selectedItem, setSelectedItem] = useState(null);
             )}
           </div>
         ))}
+        </div>
 </div>
     </div>   
   );
