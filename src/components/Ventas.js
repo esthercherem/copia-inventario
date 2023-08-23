@@ -2,16 +2,61 @@
 import React, { useState } from 'react';
 import '../styles/Shop.css'
 import ModalVentas from './ModalVentas'
-
+import SidebarVentas from './SidebarVentas'; 
 
 
 
 const Ventas = ({ soldItems, setSoldItems }) => {
 
-
+    const [searchText, setSearchText] = useState('');
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+    const [filteredItems, setFilteredItems] = useState(soldItems);
     const [isModalOpen, setIsModalOpen] = useState(false);
 const [selectedItem, setSelectedItem] = useState(null);
 
+  // Función para filtrar elementos basados en la búsqueda de texto
+  const handleTextSearch = () => {
+    const sanitizedSearchText = searchText.toLowerCase().replace(/[^a-z0-9áéíóúüñ\s]/g, '');
+
+    const filtered = soldItems.filter((item) => {
+      for (const key in item) {
+        if (item[key].toString().toLowerCase().includes(sanitizedSearchText)) {
+          return true;
+        }
+      }
+      return false;
+    });
+
+    setFilteredItems(filtered);
+  };
+
+  // Función para filtrar elementos basados en el rango de precios
+  const handlePriceSearch = () => {
+    const min = parseFloat(minPrice);
+    const max = parseFloat(maxPrice);
+
+    const filtered = soldItems.filter((item) => {
+      const itemPrice = parseFloat(item.price);
+      return itemPrice >= min && itemPrice <= max;
+    });
+
+    setFilteredItems(filtered);
+  };
+
+  // Función para limpiar los filtros
+  const handleClearSearch = () => {
+    setSearchText('');
+    setMinPrice('');
+    setMaxPrice('');
+    setFilteredItems(soldItems);
+  };
+
+  // funciones del sidebar
+
+
+
+  
 
   // modal
 
@@ -27,7 +72,39 @@ const [selectedItem, setSelectedItem] = useState(null);
     
 
     <div >
+          <input
+        type="text"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        placeholder="Buscar en ventas..."
+      />
+      <button className="btn btn-dark" onClick={handleTextSearch}>
+        Buscar Texto
+      </button>
+      <input
+        type="number"
+        value={minPrice}
+        onChange={(e) => setMinPrice(e.target.value)}
+        placeholder="Precio mínimo"
+      />
+      <input
+        type="number"
+        value={maxPrice}
+        onChange={(e) => setMaxPrice(e.target.value)}
+        placeholder="Precio máximo"
+      />
+      <button className="btn btn-dark" onClick={handlePriceSearch}>
+        Buscar por Precio
+      </button>
+      <button className="btn btn-dark" onClick={handleClearSearch}>
+        Limpiar
+      </button><br></br>
       <h1>Elementos Vendidos</h1>
+
+
+
+      <SidebarVentas soldItems={soldItems} />
+
       <div class="product-container">
         {soldItems.map((item) => (
           <div key={item.code}className="product-card">
