@@ -10,29 +10,21 @@ import axios from "axios";
 const Inventory = ({ onAddItem }) => {
   const [items, setItems] = useState([]);
 
-  //UPDATE PARA CONECTAR CON SERVIDOR
-    // Función para agregar un nuevo elemento al inventario
-    const handleAddItem = async (newItem) => {
-        try {
-          const response = await axios.post('https://serverinventario.onrender.com', newItem); // ADD SERVER RENDER LINK
-          const addedItem = response.data;
-          setItems([...items, addedItem]);
-        } catch (error) {
-          console.error('Error al agregar el artículo:', error);
-        }
-      };
-  
+  // Función para agregar un nuevo elemento al inventario
+  const handleAddItem = (newItem) => {
+    setItems([...items, newItem]);
+  };
 
   return (
     <div class="col-12">
      <h1>Agrega los datos de tu artículo :</h1><br></br><br></br>
       {/* Agrega el componente AddItemForm aquí */}
-      <AddItemForm onAddItem={handleAddItem} /> <br></br>
+      <AddItemForm onAddItem={onAddItem} /> <br></br>
       <div class="d-grid gap-2 col-6 mx-auto">
       <button type="submit" className="btn btn-dark" style={{ alignItems: 'center' }}>
         
         <Link to="/shop" style={{ color: 'white', textDecoration: 'none' }}>
-          Go to Shop
+          Submit
         </Link>
       </button>
       </div>
@@ -41,5 +33,9 @@ const Inventory = ({ onAddItem }) => {
 };
 
 export default Inventory;
+
+
+
+
 
 

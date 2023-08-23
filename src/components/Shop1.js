@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Modal from './Modal';
 import '../styles/Shop.css';
-import axios from "axios";
 
 const Shop = ({ items, onSellItem }) => {
   const [searchText, setSearchText] = useState('');
@@ -81,33 +80,17 @@ const Shop = ({ items, onSellItem }) => {
     return placeCount;
   };
 
-  //UPDATE PARA CONECTAR CON SERVIDOR
-  const handleSell = async (item) => {
-    try {
-      const updatedItem = {
-        ...item,
-        cliente: inputValue,
-        precioVenta: salePrice,
-        fechaVenta: saleDate,
-        vendido: true,
-      };
-      
-      // ADD SERVER RENDER LINK
-      const response = await axios.post('https://serverinventario.onrender.com', updatedItem);
-      const addedSoldItem = response.data;
-  
-      onSellItem(addedSoldItem);
-  
-      const updatedItems = filteredItems.filter((i) => i.code !== item.code);
-      setFilteredItems(updatedItems);
-  
-      setInputValue('');
-      setSalePrice('');
-    } catch (error) {
-      console.error('Error al marcar como vendido:', error);
-    }
+  const handleSell = (item) => {
+    const updatedItem = {
+      ...item,
+      cliente: inputValue,
+      precioVenta: salePrice,
+      fechaVenta: saleDate, 
+      vendido: true,
+    };
 
-    
+    // Agregar el artículo a la lista de artículos vendidos
+    onSellItem(updatedItem);
 
     // Eliminar el artículo del inventario filtrado y de los elementos mostrados
     const updatedItems = filteredItems.filter((i) => i.code !== item.code);

@@ -1,8 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Shop.css'
 import ModalVentas from './ModalVentas'
 import SidebarVentas from './SidebarVentas'; 
+import axios from 'axios';
 
 
 
@@ -57,6 +58,19 @@ const [selectedItem, setSelectedItem] = useState(null);
 
 
   
+  //UPDATE PARA CONECTAR CON SERVIDOR
+  useEffect(() => {
+    async function fetchSoldItems() {
+      try {
+        const response = await axios.get('https://serverinventario.onrender.com'); // ADD SERVER RENDER LINK
+        setSoldItems(response.data);
+      } catch (error) {
+        console.error('Error al obtener elementos vendidos:', error);
+      }
+    }
+
+    fetchSoldItems();
+  }, [setSoldItems]);
 
   // modal
 
@@ -106,9 +120,9 @@ const [selectedItem, setSelectedItem] = useState(null);
       <SidebarVentas soldItems={soldItems} />
 
       <div class="product-container">
-        {soldItems.map((item) => (
-          <div key={item.code}className="product-card">
-          
+        
+      {soldItems.map((item) => (
+          <div key={item.code} className="product-card">
             <h3>Tipo de item: {item.type}</h3>
             <p>Código: {item.code}</p>
             <p>Tipo de Oro: {item.goldType}</p>
@@ -119,21 +133,17 @@ const [selectedItem, setSelectedItem] = useState(null);
             <p>Lugar de Compra: {item.placeOfPurchase}</p>
             <p>Especificaciones: {item.specifications}</p>
             <p>Cliente: {item.cliente} </p>
-<p>Precio de Venta: {item.precioVenta} </p>
-<p>Fecha de Venta: {item.fechaVenta} </p>
-            
+            <p>Precio de Venta: {item.precioVenta} </p>
 
-            <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
+            <button className="btn btn-primary" onClick={() => handleOpenModal(item)}>
+              Ver Detalles
+            </button>
             {isModalOpen && selectedItem && (
-  <ModalVentas item={selectedItem} onClose={() => setIsModalOpen(false)} />)}
-            
-     
-
-    
+              <ModalVentas item={selectedItem} onClose={() => setIsModalOpen(false)} />
+            )}
           </div>
         ))}
-      </div>
-
+</div>
     </div>   
   );
 };
