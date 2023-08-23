@@ -27,7 +27,8 @@ const Inventory = ({ onAddItem }) => {
     <div class="col-12">
      <h1>Agrega los datos de tu artículo :</h1><br></br><br></br>
       {/* Agrega el componente AddItemForm aquí */}
-      <AddItemForm onAddItem={handleAddItem} /> <br></br>
+      <AddItemForm onAddItem={onAddItem} /> <br></br>
+      <button onClick={handleAddItem} type="submit" class="btn btn-dark">Agregar Elemento</button>
       <div class="d-grid gap-2 col-6 mx-auto">
       <button type="submit" className="btn btn-dark" style={{ alignItems: 'center' }}>
         

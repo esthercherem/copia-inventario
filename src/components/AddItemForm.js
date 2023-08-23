@@ -190,7 +190,7 @@ const AddItemForm = ({ onAddItem }) => {
         </div> 
         <div class="col-12">
         <div class="d-grid gap-2 col-6 mx-auto">
-      <button type="submit" class="btn btn-dark">Agregar Elemento</button>
+
    </div></div>
     </form>
     
