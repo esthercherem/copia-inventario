@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import '../styles/Welcome.css'
-
+import './Welcome.css'; // Import custom CSS for styling
 
 const Welcome = () => {
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false); // Cambiado a false
+
+    useEffect(() => {
+        const modalShown = localStorage.getItem('modalShown');
+        if (!modalShown) {
+            setShowModal(true); // Mostrar el modal solo si no se ha mostrado antes
+            localStorage.setItem('modalShown', 'true'); // Marcar que el modal se ha mostrado
+        }
+    }, []);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);

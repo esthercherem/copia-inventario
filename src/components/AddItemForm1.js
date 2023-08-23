@@ -81,51 +81,16 @@ const AddItemForm = ({ onAddItem }) => {
 
  //UPDATE PARA CONECTAR CON SERVIDOR
     // Función para agregar un nuevo elemento al inventario
-  
-    const handleAddItem = async () => {
-        try {
-          const newItem = {
-            company,
-            cost,
-            price: calculatedPrice,
-            purchaseDate,
-            specifications,
-            code,
-            goldType,
-            type: itemType,
-            placeOfPurchase,
-          };
-      
-          // Realiza una solicitud POST al servidor
-          const response = await axios.post('/api/add-item', newItem);
-      
-          if (response.status === 200) {
-            // El artículo se ha agregado con éxito en el servidor
-            // Aquí puedes manejar la respuesta del servidor si es necesario
-            console.log('Artículo agregado con éxito en el servidor:', response.data);
-      
-            // Llama a la función onAddItem para actualizar la lista de artículos en tu componente principal
-            onAddItem(response.data);
-      
-            // Limpia los campos del formulario después de agregar el artículo
-            setCompany('');
-            setCost('');
-            setPurchaseDate('');
-            setSpecifications('');
-            setCalculatedPrice('');
-            setCode('');
-            setGoldType('');
-            setItemType('');
-            setPlaceOfPurchase('');
-          } else {
-            // Maneja los errores de la solicitud, por ejemplo, mostrando un mensaje al usuario
-            console.error('Error al agregar el artículo en el servidor:', response.statusText);
-          }
-        } catch (error) {
-          // Maneja los errores de la solicitud, por ejemplo, mostrando un mensaje al usuario
-          console.error('Error al agregar el artículo en el servidor:', error);
-        }
-      };
+    const handleAddItem = async (newItem) => {
+      try {
+        const response = await axios.post('https://serverinventario.onrender.com', newItem); // ADD SERVER RENDER LINK
+        const addedItem = response.data;
+        setItems([...items, addedItem]);
+      } catch (error) {
+        console.error('Error al agregar el artículo:', error);
+      }
+    };
+
 
   return (
    
