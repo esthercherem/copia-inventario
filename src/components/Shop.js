@@ -201,38 +201,38 @@ const Shop = ({ items, onSellItem }) => {
 
   return (
     <div>
-      <div class="sticky-top">
-        <nav class={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
-          <div class="p-2">
+      <div className="sticky-top">
+        <nav className={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
+          <div className="p-2">
             <p>Filtra información de los artículos:</p>
             {/* Buscador de texto */}
             <input
-              class="p-2"
+              className="p-2"
               type="text"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               placeholder="Buscar en toda la tienda..."
             />
-            <button class="btn btn-dark" onClick={handleTextSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>Buscar Texto</button>
+            <button className="btn btn-dark" onClick={handleTextSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>Buscar Texto</button>
           </div>
           <div>
             <p> Busca artículos dentro del siguiente rango de precios:</p>
             {/* Buscador de rango de precios */}
             <input
-              class="p-2 ms-auto"
+              className="p-2 ms-auto"
               type="number"
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
               placeholder="Precio mínimo"
             />
             <input
-              class="p-2"
+              className="p-2"
               type="number"
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
               placeholder="Precio máximo"
               style={{ marginRight: '10px' , marginLeft: '10px'}}/>
-            <button class="btn btn-dark" onClick={handlePriceSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>Buscar por Precio</button>
+            <button className="btn btn-dark" onClick={handlePriceSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>Buscar por Precio</button>
           </div>
          
           <button  className="btn btn-danger" onClick={handleClearSearch} style={{ marginRight: '10px' , marginLeft: '10px'}}>Reset el buscador</button>
@@ -246,10 +246,10 @@ const Shop = ({ items, onSellItem }) => {
       </div>
       <div className="product-container">
         {filteredItems.map((item) => (
-          <div class="product-card">
+          <div className="product-card">
             <div key={item.code} className="product">
               {/* <img src="..." class="card-img-top" alt="..."></img> */}
-              <h5 class="card-title">Tipo de item: {item.type}</h5>
+              <h5 className="card-title">Tipo de item: {item.type}</h5>
               <p>Código: {item.code}</p>
               <p>Tipo de Oro: {item.goldType}</p>
               <p>Compañía: {item.company}</p>
@@ -299,11 +299,11 @@ const Shop = ({ items, onSellItem }) => {
   onKeyPress={(event) => handleInputKeyPress(event, item)}
 />
 
-              <button class="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
+              <button className="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
               {isModalOpen && selectedItem && (
                 <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />
               )} <br></br>
-              <button class="btn btn-primary" onClick={() => handleSell(item)}>Vendido</button>
+              <button className="btn btn-primary" onClick={() => handleSell(item)}>Vendido</button>
             </div>
           </div>
         ))}

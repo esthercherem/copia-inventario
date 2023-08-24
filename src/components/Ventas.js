@@ -71,8 +71,8 @@ const [selectedItem, setSelectedItem] = useState(null);
 
     <div className="ventas-container">
         <div class="sticky-top">
- <nav class={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
-          <div class="p-2">
+ <nav className={`hstack gap-3 bg-light ${isModalOpen ? 'hide-nav' : ''}`}>
+          <div className="p-2">
     <div> <p>Filtra cualquier información de los artículos:</p>
           <input
     class="p-2"
