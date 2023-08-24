@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import '../styles/Welcome.css';
+import '../styles/Welcome.css'; // Import custom CSS for styling
 
 const Welcome = () => {
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false); // Cambiado a false
+
+    useEffect(() => {
+        const modalShown = localStorage.getItem('modalShown');
+        if (!modalShown) {
+            setShowModal(true); // Mostrar el modal solo si no se ha mostrado antes
+            localStorage.setItem('modalShown', 'true'); // Marcar que el modal se ha mostrado
+        }
+    }, []);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
 
-    useEffect(() => {
-        // Comprobar si el usuario está autenticado en el almacenamiento local al cargar la página
-        const isAuthenticated = localStorage.getItem('authenticated');
-        if (isAuthenticated) {
-            setLoggedIn(true);
-            setShowModal(false);
-        }
-    }, []);
-
     const handleLogin = () => {
         if (username === 'admin' && password === 'iloveme') {
-            // Autenticación exitosa, guardar en el almacenamiento local
-            localStorage.setItem('authenticated', 'true');
             setLoggedIn(true);
             setShowModal(false);
         } else {
@@ -33,7 +31,7 @@ const Welcome = () => {
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content rounded p-4">
                                 <div className="modal-header">
                                     <h5 className="modal-title">LOG IN</h5>
@@ -64,8 +62,6 @@ const Welcome = () => {
                     </div>
                 </div>
             )}
-
-          
 
             {loggedIn && (
                 <div className="welcome-message">

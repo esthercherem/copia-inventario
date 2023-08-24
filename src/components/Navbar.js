@@ -1,13 +1,15 @@
 // En src/components/Navbar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from './logo.png';
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          Mi App
+        <img src={logo} alt="Logo de I Love Me" width="100" height="50" />
+       
         </Link>
         <button
           className="navbar-toggler"

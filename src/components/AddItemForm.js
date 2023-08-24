@@ -52,7 +52,7 @@ const AddItemForm = ({ onAddItem }) => {
 
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newItem = {
       company,
@@ -65,7 +65,18 @@ const AddItemForm = ({ onAddItem }) => {
         type: itemType,
         placeOfPurchase,
     };
-    onAddItem(newItem);
+
+    try {
+        const response = await axios.post(
+          'https://serverinventario.onrender.com/api/add-item',
+          newItem
+        );
+
+          // Manejar la respuesta del servidor
+    const addedItem = response.data;
+
+    setItems((prevItems) => [...prevItems, addedItem]);
+    //onAddItem(newItem);
     // Aquí puedes enviar el newItem al servidor o realizar cualquier otra acción necesaria
     // Después de enviar los datos, puedes restablecer los valores de los estados para limpiar el formulario.
     setCompany('');
@@ -77,7 +88,11 @@ const AddItemForm = ({ onAddItem }) => {
     setGoldType('');
     setItemType('');
     setPlaceOfPurchase('');
-  };
+  }  catch (error) {
+    console.error('Error al agregar el artículo:', error);
+  }
+};
+
 
  //UPDATE PARA CONECTAR CON SERVIDOR
     // Función para agregar un nuevo elemento al inventario
@@ -85,7 +100,8 @@ const AddItemForm = ({ onAddItem }) => {
       try {
         const response = await axios.post('https://serverinventario.onrender.com/api/add-item', newItem); // ADD SERVER RENDER LINK
         const addedItem = response.data;
-        setItems([...items, addedItem]);
+
+       setItems((prevItems) => [...prevItems, addedItem]);
       } catch (error) {
         console.error('Error al agregar el artículo:', error);
       }
