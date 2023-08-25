@@ -93,7 +93,7 @@ const Shop = ({ items, onSellItem }) => {
       };
       
       // ADD SERVER RENDER LINK
-      const response = await axios.post('https://serverinventario.onrender.com/api/add-sold-item', updatedItem);
+      const response = await axios.post('https://serverinventario.onrender.com/add-sold-item', updatedItem);
       const addedSoldItem = response.data;
   
       onSellItem(addedSoldItem);

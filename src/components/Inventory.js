@@ -63,7 +63,7 @@ function Inventory() {
 
     try {
       // Enviar los datos al servidor utilizando axios
-      const response = await axios.post('https://serverinventario.onrender.com/api/add-item', newItemData);
+      const response = await axios.post('https://serverinventario.onrender.com/add-item', newItemData);
 
       // Manejar la respuesta del servidor, puedes hacer lo que necesites aquí
       console.log('Artículo agregado:', response.data);

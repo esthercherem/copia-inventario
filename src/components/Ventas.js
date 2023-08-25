@@ -48,7 +48,7 @@ const [selectedItem, setSelectedItem] = useState(null);
   useEffect(() => {
     async function fetchSoldItems() {
       try {
-        const response = await axios.get('https://serverinventario.onrender.com/api/sold-items'); // ADD SERVER RENDER LINK
+        const response = await axios.get('https://serverinventario.onrender.com/sold-items'); // ADD SERVER RENDER LINK
         setSoldItems(response.data);
       } catch (error) {
         console.error('Error al obtener elementos vendidos:', error);
