@@ -18,7 +18,13 @@ const Shop = ({ items, onSellItem }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [exchangeRate, setExchangeRate] = useState(1);
   const [saleDate, setSaleDate] = useState('');
+  const [inventoryItems, setInventoryItems] = useState([]);
+  const [sentItems, setSentItems] = useState([]);
+  const [soldItemsList, setSoldItemsList] = useState([]);
 
+  const isItemSold = (item) => {
+    return soldItemsList.some((soldItem) => soldItem.id === item.id);
+  };
 
   const handleTextSearch = () => {
     const sanitizedSearchText = searchText.toLowerCase().replace(/[^a-z0-9áéíóúüñ\s]/g, '');
@@ -81,45 +87,46 @@ const Shop = ({ items, onSellItem }) => {
     return placeCount;
   };
 
-  //UPDATE PARA CONECTAR CON SERVIDOR
-  const handleSell = async (item) => {
+  // funcion get para recibir el objeto de la tabla existencias
+   
+  
+  const fetchInventoryItems = async () => {
     try {
-      const updatedItem = {
-        ...item,
-        cliente: inputValue,
-        precioVenta: salePrice,
-        fechaVenta: saleDate,
-        vendido: true,
-      };
-      
-      // ADD SERVER RENDER LINK
-      const response = await axios.post('https://serverinventario.onrender.com/add-sold-item', updatedItem);
-      const addedSoldItem = response.data;
-  
-      onSellItem(addedSoldItem);
-  
-      const updatedItems = filteredItems.filter((i) => i.code !== item.code);
-      setFilteredItems(updatedItems);
-  
-      setInputValue('');
-      setSalePrice('');
+      const response = await axios.get('https://serverinventario.onrender.com/inventory-items');
+      setInventoryItems(response.data);
     } catch (error) {
-      console.error('Error al marcar como vendido:', error);
+      console.error('Error al obtener elementos del inventario:', error);
+      alert('Error al obtener elementos del inventario:', error);
     }
-
-    
-
-    // Eliminar el artículo del inventario filtrado y de los elementos mostrados
-    const updatedItems = filteredItems.filter((i) => i.code !== item.code);
-    setFilteredItems(updatedItems);
-
-    // Restaurar los valores de los estados
-    setInputValue('');
-    setSalePrice('');
-
-    // Actualizar el tipo de cambio si es necesario
-    fetchExchangeRate();
   };
+  
+  useEffect(() => {
+    fetchInventoryItems();
+  }, []);
+  
+  
+  
+  
+  
+  // // Función para hacer la solicitud GET al servidor
+    // const fetchInventoryItems = async () => {
+    //   try {
+    //     const response = await axios.get('https://serverinventario.onrender.com/inventory-items'); // Reemplaza con la URL y el puerto correctos de tu servidor
+    //     setInventoryItems(response.data);
+    //   } catch (error) {
+    //     console.error('Error al obtener elementos del inventario:', error);
+    //     alert('Error al obtener elementos del inventario:', error);
+    //   }
+    // };
+  
+    // // Llamar a la función de solicitud cuando el componente se monte
+    // useEffect(() => {
+    //   fetchInventoryItems();
+    // }, []); // El segundo argumento vacío [] asegura que esta solicitud se realice solo una vez cuando el componente se monte
+  
+
+
+  
 
   const calculateSummary = () => {
     return {
@@ -154,32 +161,96 @@ const Shop = ({ items, onSellItem }) => {
     fetchExchangeRate();
   };
 
-  // input de cliente y precio de venta
 
-  const handleInputKeyPress = (event, item) => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // Previene que el evento de "Enter" se propague y active la acción por defecto
-      if (inputValue.trim() !== '' || salePrice.trim() !== '' || saleDate.trim() !== '') {
-        const updatedItem = {
-          ...item,
-          cliente: inputValue,
-          precioVenta: salePrice,
-          fechaVenta: saleDate,
-          vendido: false, 
-        };
-  
-        onSellItem(updatedItem);
-  
-        const updatedItems = filteredItems.filter((i) => i.code !== item.code);
-        setFilteredItems(updatedItems);
-  
-        setInputValue('');
-        setSalePrice('');
-        setSaleDate('');
 
-      }
-    }
-  };
+
+
+  // Función para realizar la solicitud PUT y actualizar el estado a vendido
+const handleUpdateState = async (item) => {
+  try {
+    // Realizar la solicitud PUT para actualizar el estado
+    await axios.put(`https://serverinventario.onrender.com/existencias/${item.id}`, {
+      estado: 'Vendido',
+      
+    });
+      // Agregar el artículo vendido al estado soldItems
+      setSoldItemsList([...soldItemsList, item]);
+     
+    alert('Artículo marcado como vendido correctamente.');
+  } catch (error) {
+    console.error('Error al marcar como vendido:', error);
+    alert('Error al marcar como vendido:', error);
+  }
+};
+
+// funcion para eliminar articulo de la base de datos:
+const handleDeleteItem = async (itemId) => {
+  try {
+    // Realiza una solicitud DELETE al servidor para eliminar el artículo
+    await axios.delete(`https://serverinventario.onrender.com/existencias/${itemId}`);
+    
+    // Actualiza la lista de elementos eliminando el artículo
+    const updatedItems = filteredItems.filter((item) => item.id !== itemId);
+    setFilteredItems(updatedItems);
+  } catch (error) {
+    console.error('Error al eliminar el artículo:', error);
+    alert('Error al eliminar el artículo:', error);
+  }
+};
+
+
+
+
+
+
+// // Función para enviar el artículo a la tabla de ventas
+
+const handleSend = async (item) => {
+  try {
+    // Crea un objeto con los datos a enviar a la tabla de ventas
+    const saleData = {
+      ...item, // Utiliza todos los datos del artículo actual
+      
+      cliente: inputValue, // Agrega el cliente desde el estado
+      precioVenta: salePrice, // Agrega el precio de venta desde el estado
+      fechaVenta: saleDate, // Agrega la fecha de venta desde el estado
+    };
+
+    // Realiza una solicitud POST al servidor para agregar el artículo a la tabla de ventas
+    const response = await axios.post('https://serverinventario.onrender.com/endpoint_de_ventas', saleData);
+
+    // Maneja la respuesta del servidor, puedes hacer lo que necesites aquí
+    console.log('Artículo enviado:', response.data);
+    alert('Artículo enviado:', response.data);
+
+
+    // Agrega el artículo enviado a la lista de sentItems
+    setSentItems([...sentItems, item]);
+
+    // Actualiza los elementos filtrados para excluir el artículo enviado
+    const updatedFilteredItems = filteredItems.filter((filteredItem) => filteredItem.id !== item.id);
+    setFilteredItems(updatedFilteredItems);
+
+    // Limpia los campos del formulario si lo deseas
+    setInputValue('');
+    setSalePrice('');
+    setSaleDate('');
+
+    // Obtiene el ID del artículo actual
+    //const itemId = item.id;
+
+  
+     // Después de enviar el artículo, agrega el artículo a la lista de sentItems
+    // setSentItems([...sentItems, item]);
+
+  } catch (error) {
+    console.error('Error al enviar el artículo:', error);
+    alert('Error al enviar el artículo:', error);
+    // Maneja errores aquí
+  }
+};
+
+
   
   
 
@@ -245,21 +316,33 @@ const Shop = ({ items, onSellItem }) => {
         </nav>
       </div>
       <div className="product-container">
-        {filteredItems.map((item) => (
-          <div className="product-card">
+      {inventoryItems.map((item) => {
+  const isSent = sentItems.some((sentItem) => sentItem.id === item.id);
+  const isSold = isItemSold(item);
+  // Aplicar la clase CSS si el artículo está vendido
+  const cardClassName = `product-card ${isSold ? 'sold-card' : ''}`;
+
+  if (isSent) {
+    return null;
+  }
+            return (
+
+          <div className={cardClassName} key={item.id}>
             <div key={item.code} className="product">
               {/* <img src="..." class="card-img-top" alt="..."></img> */}
-              <h5 className="card-title">Tipo de item: {item.type}</h5>
-              <p>Código: {item.code}</p>
-              <p>Tipo de Oro: {item.goldType}</p>
-              <p>Compañía: {item.company}</p>
-              <p>Costo: {item.cost}</p>
-              <p>Precio: {item.price}</p>
-              <p>Fecha de Compra: {item.purchaseDate}</p>
-              <p>Lugar de Compra: {item.placeOfPurchase}</p>
-              <p>Especificaciones: {item.specifications}</p>
-              <p>Costo en Pesos: {parseFloat(item.cost * exchangeRate).toFixed(2)}</p>
-              <p>Precio en Pesos: {parseFloat(item.price * exchangeRate).toFixed(2)}</p>
+              <h5 className="card-title">Tipo de item: {item.tipo_articulo}</h5>
+              <p>Código: {item.codigo}</p>
+              <p>Tipo de Oro: {item.tipo_oro}</p>
+              <p>Compañía: {item.compañia}</p>
+              <p>Costo: {item.costo}</p>
+              <p>Precio: {item.precio_calculado}</p>
+              <p>Fecha de Compra: {item.fecha_compra}</p>
+              <p>Lugar de Compra: {item.lugar_compra}</p>
+              <p>Especificaciones: {item.especificaciones}</p>
+              <p>Estado: {item.estado}</p>
+              <p>Costo en Pesos: {parseFloat(item.costo * exchangeRate).toFixed(2)}</p>
+              <p>Precio en Pesos: {parseFloat(item.precio_calculado * exchangeRate).toFixed(2)}</p>
+            
 
   
               
@@ -272,7 +355,7 @@ const Shop = ({ items, onSellItem }) => {
                     id="clientInput"
                     value={inputValue}
                     onChange={(event) => setInputValue(event.target.value)}
-                    onKeyPress={(event) => handleInputKeyPress(event, item)}
+
                   />
                 </div>
               )}
@@ -285,7 +368,7 @@ const Shop = ({ items, onSellItem }) => {
                     id="salePriceInput"
                     value={salePrice}
                     onChange={(event) => setSalePrice(event.target.value)}
-                    onKeyPress={(event) => handleInputKeyPress(event, item)}
+    
                   />
                 </div>
               )}
@@ -296,17 +379,26 @@ const Shop = ({ items, onSellItem }) => {
   id="dateInput"
   value={saleDate}
   onChange={(event) => setSaleDate(event.target.value)}
-  onKeyPress={(event) => handleInputKeyPress(event, item)}
-/>
 
-              <button className="btn btn-primary" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
+/>
+<div class="d-grid gap-2 col-6 mx-auto">
+              <button className="btn btn-dark" onClick={() => handleOpenModal(item)}>Ver Detalles</button>
               {isModalOpen && selectedItem && (
                 <Modal item={selectedItem} onClose={() => setIsModalOpen(false)} />
               )} <br></br>
-              <button className="btn btn-primary" onClick={() => handleSell(item)}>Vendido</button>
-            </div>
-          </div>
-        ))}
+<button className="btn btn-dark" onClick={() => {
+  handleUpdateState(item);
+  handleSend(item);
+}}>Vendido y Enviar</button>
+
+              <button className="btn btn-danger" onClick={() => handleDeleteItem(item.id)}>Eliminar</button>
+              {/* <button className="btn btn-dark" onClick={() => handleSend(item)}>Enviar</button> */}
+</div>
+</div>
+      </div>
+         );
+      })}
+   
       </div>
     </div>
   );

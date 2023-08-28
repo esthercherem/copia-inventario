@@ -58,6 +58,24 @@ const [selectedItem, setSelectedItem] = useState(null);
     fetchSoldItems();
   }, [setSoldItems]);
 
+    //  // Función para hacer la solicitud GET al servidor
+    //  const fetchSoldItems = async () => {
+    //   try {
+    //     const response = await axios.get('https://serverinventario.onrender.com/sold-items'); // Reemplaza con la URL y el puerto correctos de tu servidor
+    //     setSoldItems(response.data);
+    //     alert('se recibieron los artñiculos correctamente')
+    //   } catch (error) {
+    //     console.error('Error al obtener elementos de ventas', error);
+    //     alert('Error al obtener elementos de ventas:', error);
+    //   }
+    // };
+  
+    // // Llamar a la función de solicitud cuando el componente se monte
+    // useEffect(() => {
+    //   fetchSoldItems();
+    // }, []); // El segundo argumento vacío [] asegura que esta solicitud se realice solo una vez cuando el componente se monte
+  
+
   // modal
 
   const handleOpenModal = (item) => {
@@ -99,29 +117,35 @@ const [selectedItem, setSelectedItem] = useState(null);
       <div className="content">
       <SidebarVentas soldItems={soldItems} />
 </div> </nav>
+<h4>Artículos Vendidos:</h4>
       <div class="product-container">
         
       {soldItems.map((item) => (
-          <div key={item.code} className="product-card">
-            <h3>Tipo de item: {item.type}</h3>
-            <p>Código: {item.code}</p>
-            <p>Tipo de Oro: {item.goldType}</p>
-            <p>Compañía: {item.company}</p>
-            <p>Costo: {item.cost}</p>
-            <p>Precio: {item.price}</p>
-            <p>Fecha de Compra: {item.purchaseDate}</p>
-            <p>Lugar de Compra: {item.placeOfPurchase}</p>
-            <p>Especificaciones: {item.specifications}</p>
+              <div className="product-card"  key={item.id}>
+              <div key={item.code} className="product">
+ 
+                <h5 className="card-title">Tipo de item: {item.tipo_articulo}</h5>
+                <p>Código: {item.codigo}</p>
+                <p>Tipo de Oro: {item.tipo_oro}</p>
+                <p>Compañía: {item.compañia}</p>
+                <p>Costo: {item.costo}</p>
+                <p>Precio: {item.precio_calculado}</p>
+                <p>Fecha de Compra: {item.fecha_compra}</p>
+                <p>Lugar de Compra: {item.lugar_compra}</p>
+                <p>Especificaciones: {item.especificaciones}</p>
+                <p>Estado: {item.estado}</p>
             <p>Cliente: {item.cliente} </p>
-            <p>Precio de Venta: {item.precioVenta} </p>
-
-            <button className="btn btn-primary" onClick={() => handleOpenModal(item)}>
+            <p>Precio de Venta: {item.precio_venta} </p>
+            <p>Fecha de Venta: {item.fecha_venta}</p>
+            
+            <div class="d-grid gap-2 col-6 mx-auto">
+            <button className="btn btn-dark" onClick={() => handleOpenModal(item)}>
               Ver Detalles
             </button>
             {isModalOpen && selectedItem && (
               <ModalVentas item={selectedItem} onClose={() => setIsModalOpen(false)} />
             )}
-          </div>
+          </div></div></div>
         ))}
         </div>
 </div>
@@ -130,5 +154,6 @@ const [selectedItem, setSelectedItem] = useState(null);
 };
 
 export default Ventas;
+
 
 

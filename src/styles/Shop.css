@@ -33,3 +33,12 @@
   .hide-nav {
     display: none;
   }
+  .sent-item {
+    display: none; /* Oculta los elementos con esta clase */
+  }
+
+  .sold-card {
+    background-color: rgba(255, 0, 0, 0.5); /* Rojo con transparencia */
+  }
+  
+  

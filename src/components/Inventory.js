@@ -89,7 +89,7 @@ function Inventory() {
 
   return (
     <div className="container">
-      <h1>Formulario de Artículo</h1>
+      <h1>Agrega los datos de tu artículo :</h1>
      
       <form className="row g-3" onSubmit={handleSubmit}>
      <div className="col-md-4">
@@ -200,8 +200,8 @@ function Inventory() {
     required
   ></textarea>
           </div>
-        <div className="col-md-12">
-        <button type="submit" className="btn btn-primary" >Agregar Artículo</button>
+        <div className="d-grid gap-2 col-12 mx-auto">
+        <button type="submit"className="btn btn-dark" style={{ alignItems: 'center' }} >Agregar Artículo</button>
         </div>
       </form>
       </div>
